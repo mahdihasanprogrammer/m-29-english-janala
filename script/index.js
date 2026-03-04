@@ -62,11 +62,11 @@ const displayWords = (words)=>{
         
         // 3. Create HTML Element;
         const wordCard = document.createElement('div');
-        wordCard.className="bg-base-100 p-5 rounded-lg text-center"
+        wordCard.className="bg-base-100 py-8 px-5 md:p-8 rounded-lg text-center"
         wordCard.innerHTML=`
-            <h2 class="font-bold text-3xl">${word.word}</h2>
-            <p class="text-xl my-6">meaning/pronunciation </p>
-            <p class="text-3xl font-medium font-bangla">${word.meaning} </p>
+            <h2 class="font-bold text-2xl md:text-3xl">${word.word}</h2>
+            <p class="text-base md:text-xl my-2 md:my-4">meaning/pronunciation </p>
+            <p class="text-xl md:text-3xl font-medium font-bangla">"${word.meaning}/${word.pronunciation}"</p>
         `
 
         // 4. append wordCard in wordContainer;
