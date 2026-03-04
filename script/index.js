@@ -64,16 +64,18 @@ const displayWords = (words)=>{
         const wordCard = document.createElement('div');
         wordCard.className="bg-base-100 px-5 md:px-7 py-10 md:py-10 rounded-lg text-center shadow-sm"
         wordCard.innerHTML=`
+           <div class=" space-y-4">
             <h2 class="font-bold text-xl md:text-2xl">${word.word}</h2>
-            <p class="text-base md:text-xl my-2 md:my-4">meaning / pronunciation </p>
-            <p class="text-xl md:text-2xl font-medium font-bangla">"${word.meaning} / ${word.pronunciation}"</p>
-              <div class="flex justify-between items-center mt-10">
-                <button class="btn bg-primary-content">
+            <p class="text-base md:text-xl  font-medium">meaning / pronunciation </p>
+            <p class="text-[#18181B] text-xl md:text-2xl font-semibold font-bangla">"${word.meaning} / ${word.pronunciation}"</p>
+              <div class="flex justify-between items-center">
+                <button class="btn bg-primary-content hover:bg-primary hover:text-base-100">
                     <i class="fa-solid fa-circle-info"></i>
                 </button>
-                <button class="btn bg-primary-content">
+                <button class="btn bg-primary-content hover:bg-primary hover:text-base-100">
                     <i class="fa-solid fa-volume-high"></i>
                 </button>
+            </div>
             </div>
         `
 
