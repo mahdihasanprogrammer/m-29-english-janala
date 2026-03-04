@@ -24,6 +24,7 @@
      <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- header section -->
     <header class="container">
         <!-- nav part -->
         <navbar class="navbar bg-[rgba(186,222,255,0.26)] shadow-sm lg:px-10">
@@ -73,33 +74,57 @@
         </navbar>
 
         <!-- banner part -->
-        <section class="px-5 py-5 md:py-10 md:px-10 flex flex-col-reverse md:flex-row justify-between items-center gap-10">
-             <!-- content -->
-                <div class="text-center md:text-left flex-1 space-y-6">
-                    <h2 class="text-4xl md:text-5xl font-bold leading-15">
-                        <span class="text-[#00BCFF]">English</span> is Easy!!
-                    </h2>
-                    <p class="font-bangla lg:w-4/5">
-                        আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি যদি নতুন হন অথবা আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে নিয়ে যাবে অন্য একটি Level এ
-                    </p>
+        <section class="px-5 py-10 md:px-10 flex flex-col-reverse md:flex-row justify-between items-center gap-10">
 
-                    <!-- form -->
-                    <div class="w-full max-w-sm">
-                      <fieldset class="fieldset">
-                        <input type="text" class="input" placeholder="Enter Your Name"/>
-                      
-                        <input type="password" class="input mt-4" placeholder="........"/>
-                       
-                        <button class="btn btn-primary md:w-fit mt-4">Get Started</button>
-                      </fieldset>
-                    </div>
-                </div> 
-             <!-- image -->
-                <div class="flex-1">
-                    <img src="./assets/hero-student.png" alt="">
+             <!-- content -->
+            <div class="text-center md:text-left flex-1 space-y-6">
+                <h2 class="text-4xl md:text-5xl font-bold leading-15">
+                    <span class="text-[#00BCFF]">English</span> is Easy!!
+                </h2>
+                <p class="font-bangla lg:w-4/5">
+                    আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি যদি নতুন হন অথবা আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে নিয়ে যাবে অন্য একটি Level এ
+                </p>
+                <!-- form -->
+                <div class="w-full max-w-sm">
+                  <fieldset class="fieldset">
+                    <input type="text" class="input" placeholder="Enter Your Name"/>
+                  
+                    <input type="password" class="input mt-4" placeholder="........"/>
+                   
+                    <button class="btn btn-primary md:w-fit mt-4">Get Started</button>
+                  </fieldset>
                 </div>
+            </div> 
+
+             <!-- image -->
+            <div class="flex-1">
+              <img src="./assets/hero-student.png" alt="">
+            </div>
         </section>
 
     </header>
+
+    <!-- lessons section -->
+     <section class="px-5 py-10 md:px-10 mb-10">
+
+        <h2 class="text-4xl font-bold text-center mb-10">
+            <span class="text-[#00BCFF]">Let's</span> Learn Vocabularies
+        </h2>    
+        <div id="lesson-container" class="flex flex-wrap gap-5 justify-center">
+
+        </div>
+     </section>
+
+
+     <!-- word-container section -->
+      <section class="container px-5 py-10 md:px-10 mb-10 ">
+        <div id="word-container" class=" container bg-gray-100 p-10 rounded-lg grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+
+        </div>
+      </section>
+
+
+     <!-- set javaScript -->
+      <script src="script/index.js"></script>
 </body>
 </html>
