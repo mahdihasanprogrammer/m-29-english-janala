@@ -182,4 +182,21 @@ const displayWordDetails =(detail) =>{
 }
 
 
+
 loadLessons()
+
+const btnSearch= document.getElementById('btn-search');
+btnSearch.addEventListener('click', ()=>{
+    const inputSearch = document.getElementById('input-search');
+    const inputValue = inputSearch.value.trim().toLowerCase();
+
+    const url = "https://openapi.programming-hero.com/api/words/all";
+    fetch(url)
+    .then(res => res.json())
+    .then(json => {
+        const allWords = json.data;
+        const filterWord = allWords.filter(word => word.word.toLowerCase().includes(inputValue));
+       displayWords(filterWord)
+    })
+    
+})
