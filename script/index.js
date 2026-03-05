@@ -1,4 +1,24 @@
 
+
+const createElement = (arr)=>{
+    const htmlElement = arr.map(element => `<button class="btn">${element} </button>`)
+        
+      return htmlElement.join(" ");
+    
+}
+
+const manageSpinner = (status)=>{
+    if(status===true){
+        document.getElementById('spinner').classList.remove('hidden');
+        document.getElementById('word-container').classList.add('hidden');
+    }
+    else{
+        document.getElementById('spinner').classList.add('hidden');
+        document.getElementById('word-container').classList.remove('hidden');
+    }
+}
+
+// 1.load lesson buttons from api;
 const loadLessons = () =>{
     const url = "https://openapi.programming-hero.com/api/levels/all";
     fetch(url)  //  promise of response
@@ -10,6 +30,7 @@ const loadLessons = () =>{
     
 }
 
+// 2.remove active buttons;
 const removeActive= ()=>{
       const allLessonBtn= document.querySelectorAll('.lesson-btn')
         allLessonBtn.forEach(lessonBtn =>{
@@ -17,7 +38,10 @@ const removeActive= ()=>{
         })
 };
 
+// 3.load all levels words from api;
 const loadLevelWord =(id) =>{
+    manageSpinner(true)
+
     const url = `https://openapi.programming-hero.com/api/level/${id}`;
     fetch(url)
     .then(res => res.json())
@@ -33,8 +57,21 @@ const loadLevelWord =(id) =>{
     })
 }
 
+//4. load word details;
+ const loadWordDetail =async (id)=>{
+    
+    const url =`https://openapi.programming-hero.com/api/word/${id}`;
+    const res = await fetch(url);
+    const details = await res.json()
+    console.log(details.data)
+    displayWordDetails(details.data)
+    
+ }
 
 
+
+
+// 1. show all lessons buttons in display;
 const displayLessons = (lessons) =>{
     // console.log(lessons)
 
@@ -64,7 +101,7 @@ const displayLessons = (lessons) =>{
 }
 
 
-
+// 3, show all level words in display;
 const displayWords = (words)=>{
     
     // 1. get the container & empty;
@@ -79,9 +116,10 @@ const displayWords = (words)=>{
             <h2 class="text-4xl font-medium">নেক্সট Lesson এ যান</h2>
           </div>
         `
+        manageSpinner(false)
         return
     }
-
+      
     // 2. get into every word;
     words.forEach(word => {
         
@@ -94,7 +132,7 @@ const displayWords = (words)=>{
             <p class="text-base md:text-xl  font-medium">meaning / pronunciation </p>
             <p class="text-[#18181B] text-xl md:text-2xl font-semibold font-bangla">"${word.meaning? word.meaning : "অর্থ পাওয়া যায়নি"} / ${word.pronunciation? word.pronunciation : 'pronunciation পাওয়া যায়নি'}"</p>
               <div class="flex justify-between items-center">
-                <button class="btn bg-primary-content hover:bg-primary hover:text-base-100">
+                <button onclick="loadWordDetail(${word.id})" class="btn bg-primary-content hover:bg-primary hover:text-base-100">
                     <i class="fa-solid fa-circle-info"></i>
                 </button>
                 <button class="btn bg-primary-content hover:bg-primary hover:text-base-100">
@@ -106,7 +144,42 @@ const displayWords = (words)=>{
 
         // 4. append wordCard in wordContainer;
         wordContainer.appendChild(wordCard)
-    })
+    });
+    manageSpinner(false)
 }
+
+
+// 4. display word details;
+const displayWordDetails =(detail) =>{
+    
+    const wordDetailsContainer = document.getElementById('word-details-container');
+    wordDetailsContainer.innerHTML=`
+            <div class="space-y-5 rounded-lg border-2 border-sky-100 p-5">
+                <div>
+                <h2 class="text-2xl font-bold">${detail.word} (<i class="fa-solid fa-microphone-lines"></i>:${detail.meaning})</h2>
+              </div>
+
+              <div>
+                <h2 class="text-xl font-bold mb-2">Meaning</h2>
+                <p class="font-bangla">${detail.pronunciation}</p>
+              </div>
+
+              <div>
+                <h2 class="text-xl font-bold mb-2">Example</h2>
+                <p>${detail.sentence}</p>
+              </div>
+
+              <div>
+                <h2 class="text-xl font-bold mb-2 font-bangla">সমার্থক শব্দ গুলো</h2>
+                <div class="space-x-2">${createElement(detail.synonyms)}</div>               
+              </div>
+
+            </div>
+    `;
+    document.getElementById("word_modal").showModal();
+
+    
+}
+
 
 loadLessons()
