@@ -10,12 +10,25 @@ const loadLessons = () =>{
     
 }
 
+const removeActive= ()=>{
+      const allLessonBtn= document.querySelectorAll('.lesson-btn')
+        allLessonBtn.forEach(lessonBtn =>{
+           lessonBtn.classList.remove('active')
+        })
+};
 
 const loadLevelWord =(id) =>{
     const url = `https://openapi.programming-hero.com/api/level/${id}`;
     fetch(url)
     .then(res => res.json())
     .then(words =>{
+
+        // remove color from all lesson btn;
+       removeActive()
+
+    // /   set active btn color;
+        const lessonBtn = document.getElementById(`lesson-btn-${id}`);
+        lessonBtn.classList.add('active');
         displayWords(words.data)
     })
 }
@@ -36,9 +49,10 @@ const displayLessons = (lessons) =>{
 
         // 3. create HTML Element;
         const lessonCard = document.createElement('div');
+     
         
         lessonCard.innerHTML=`
-            <button onClick="loadLevelWord(${lesson.level_no})" class="btn btn-outline btn-primary font-semibold">
+            <button id="lesson-btn-${lesson.level_no}" onClick="loadLevelWord(${lesson.level_no})" class="lesson-btn btn btn-outline btn-primary font-semibold">
             <i class="fa-solid fa-book-open"></i>Lesson ${lesson.level_no}
             </button>
         `
@@ -57,17 +71,28 @@ const displayWords = (words)=>{
     const wordContainer = document.getElementById('word-container');
     wordContainer.innerHTML="";
 
+    if(words.length===0){
+        wordContainer.innerHTML=`
+        <div class="col-span-full text-center py-12 font-bangla space-y-4">
+            <img class="mx-auto" src="./assets/alert-error.png" alt="alert-error">
+            <p class=" text-[#79716B]">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি। </p>
+            <h2 class="text-4xl font-medium">নেক্সট Lesson এ যান</h2>
+          </div>
+        `
+        return
+    }
+
     // 2. get into every word;
     words.forEach(word => {
         
         // 3. Create HTML Element;
         const wordCard = document.createElement('div');
-        wordCard.className="bg-base-100 px-5 md:px-7 py-10 md:py-10 rounded-lg text-center shadow-sm"
+        wordCard.className="flex flex-col justify-end bg-base-100 px-5 md:px-7 py-10 md:py-10 rounded-lg text-center shadow-sm"
         wordCard.innerHTML=`
            <div class=" space-y-4">
-            <h2 class="font-bold text-xl md:text-2xl">${word.word}</h2>
+            <h2 class="font-bold text-xl md:text-2xl">${word.word ? word.word : 'শব্দ পাওয়া যায়নি'}</h2>
             <p class="text-base md:text-xl  font-medium">meaning / pronunciation </p>
-            <p class="text-[#18181B] text-xl md:text-2xl font-semibold font-bangla">"${word.meaning} / ${word.pronunciation}"</p>
+            <p class="text-[#18181B] text-xl md:text-2xl font-semibold font-bangla">"${word.meaning? word.meaning : "অর্থ পাওয়া যায়নি"} / ${word.pronunciation? word.pronunciation : 'pronunciation পাওয়া যায়নি'}"</p>
               <div class="flex justify-between items-center">
                 <button class="btn bg-primary-content hover:bg-primary hover:text-base-100">
                     <i class="fa-solid fa-circle-info"></i>
