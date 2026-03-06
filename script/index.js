@@ -1,9 +1,17 @@
 
+// Speak  Vocabularies;
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
+}
+
 
 const createElement = (arr)=>{
     const htmlElement = arr.map(element => `<button class="btn">${element} </button>`)
         
-      return htmlElement.join(" ");
+      return htmlElement.join(" "); 
+    
     
 }
 
@@ -40,6 +48,7 @@ const removeActive= ()=>{
 
 // 3.load all levels words from api;
 const loadLevelWord =(id) =>{
+
     manageSpinner(true)
 
     const url = `https://openapi.programming-hero.com/api/level/${id}`;
@@ -53,6 +62,7 @@ const loadLevelWord =(id) =>{
     // /   set active btn color;
         const lessonBtn = document.getElementById(`lesson-btn-${id}`);
         lessonBtn.classList.add('active');
+
         displayWords(words.data)
     })
 }
@@ -65,6 +75,7 @@ const loadLevelWord =(id) =>{
     const details = await res.json()
     console.log(details.data)
     displayWordDetails(details.data)
+   
     
  }
 
@@ -135,7 +146,7 @@ const displayWords = (words)=>{
                 <button onclick="loadWordDetail(${word.id})" class="btn bg-primary-content hover:bg-primary hover:text-base-100">
                     <i class="fa-solid fa-circle-info"></i>
                 </button>
-                <button class="btn bg-primary-content hover:bg-primary hover:text-base-100">
+                <button onclick=" pronounceWord('${word.word}')" class="btn bg-primary-content hover:bg-primary hover:text-base-100">
                     <i class="fa-solid fa-volume-high"></i>
                 </button>
             </div>
@@ -148,10 +159,15 @@ const displayWords = (words)=>{
     manageSpinner(false)
 }
 
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
+}
 
 // 4. display word details;
 const displayWordDetails =(detail) =>{
-    
+  
     const wordDetailsContainer = document.getElementById('word-details-container');
     wordDetailsContainer.innerHTML=`
             <div class="space-y-5 rounded-lg border-2 border-sky-100 p-5">
@@ -177,6 +193,8 @@ const displayWordDetails =(detail) =>{
             </div>
     `;
     document.getElementById("word_modal").showModal();
+      
+    
 
     
 }
@@ -185,8 +203,10 @@ const displayWordDetails =(detail) =>{
 
 loadLessons()
 
+// search word;
 const btnSearch= document.getElementById('btn-search');
 btnSearch.addEventListener('click', ()=>{
+    removeActive()
     const inputSearch = document.getElementById('input-search');
     const inputValue = inputSearch.value.trim().toLowerCase();
 
@@ -196,6 +216,7 @@ btnSearch.addEventListener('click', ()=>{
     .then(json => {
         const allWords = json.data;
         const filterWord = allWords.filter(word => word.word.toLowerCase().includes(inputValue));
+
        displayWords(filterWord)
     })
     
