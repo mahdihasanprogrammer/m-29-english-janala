@@ -124,7 +124,7 @@ const displayWords = (words)=>{
         <div class="col-span-full text-center py-12 font-bangla space-y-4">
             <img class="mx-auto" src="./assets/alert-error.png" alt="alert-error">
             <p class=" text-[#79716B]">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি। </p>
-            <h2 class="text-4xl font-medium">নেক্সট Lesson এ যান</h2>
+            <h2 class="text-3xl md:text-4xl font-medium">নেক্সট Lesson এ যান</h2>
           </div>
         `
         manageSpinner(false)
