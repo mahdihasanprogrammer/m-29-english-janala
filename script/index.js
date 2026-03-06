@@ -26,6 +26,7 @@ const manageSpinner = (status)=>{
     }
 }
 
+
 // 1.load lesson buttons from api;
 const loadLessons = () =>{
     const url = "https://openapi.programming-hero.com/api/levels/all";
@@ -38,15 +39,9 @@ const loadLessons = () =>{
     
 }
 
-// 2.remove active buttons;
-const removeActive= ()=>{
-      const allLessonBtn= document.querySelectorAll('.lesson-btn')
-        allLessonBtn.forEach(lessonBtn =>{
-           lessonBtn.classList.remove('active')
-        })
-};
 
-// 3.load all levels words from api;
+
+// 2.load all levels words from api;
 const loadLevelWord =(id) =>{
 
     manageSpinner(true)
@@ -67,17 +62,27 @@ const loadLevelWord =(id) =>{
     })
 }
 
+
+// 3.remove active buttons;
+const removeActive= ()=>{
+      const allLessonBtn= document.querySelectorAll('.lesson-btn')
+        allLessonBtn.forEach(lessonBtn =>{
+           lessonBtn.classList.remove('active')
+        })
+};
+
+
 //4. load word details;
  const loadWordDetail =async (id)=>{
-    
+
     const url =`https://openapi.programming-hero.com/api/word/${id}`;
     const res = await fetch(url);
     const details = await res.json()
     console.log(details.data)
     displayWordDetails(details.data)
    
-    
  }
+ 
 
 
 
@@ -94,11 +99,9 @@ const displayLessons = (lessons) =>{
     //2. get into every lesson;
     lessons.forEach(lesson => {
         
-
         // 3. create HTML Element;
         const lessonCard = document.createElement('div');
-     
-        
+
         lessonCard.innerHTML=`
             <button id="lesson-btn-${lesson.level_no}" onClick="loadLevelWord(${lesson.level_no})" class="lesson-btn btn btn-outline btn-primary font-semibold">
             <i class="fa-solid fa-book-open"></i>Lesson ${lesson.level_no}
@@ -112,7 +115,7 @@ const displayLessons = (lessons) =>{
 }
 
 
-// 3, show all level words in display;
+// 2, show all level words in display;
 const displayWords = (words)=>{
     
     // 1. get the container & empty;
@@ -136,7 +139,9 @@ const displayWords = (words)=>{
         
         // 3. Create HTML Element;
         const wordCard = document.createElement('div');
+
         wordCard.className="flex flex-col justify-end bg-base-100 px-5 md:px-7 py-10 md:py-10 rounded-lg text-center shadow-sm"
+        
         wordCard.innerHTML=`
            <div class=" space-y-4">
             <h2 class="font-bold text-xl md:text-2xl">${word.word ? word.word : 'শব্দ পাওয়া যায়নি'}</h2>
@@ -159,11 +164,7 @@ const displayWords = (words)=>{
     manageSpinner(false)
 }
 
-function pronounceWord(word) {
-  const utterance = new SpeechSynthesisUtterance(word);
-  utterance.lang = "en-EN"; // English
-  window.speechSynthesis.speak(utterance);
-}
+
 
 // 4. display word details;
 const displayWordDetails =(detail) =>{
@@ -186,16 +187,14 @@ const displayWordDetails =(detail) =>{
               </div>
 
               <div>
-                <h2 class="text-xl font-bold mb-2 font-bangla">সমার্থক শব্দ গুলো</h2>
-                <div class="space-x-2">${createElement(detail.synonyms)}</div>               
+                <h2 class="text-xl font-bold mb-2">synonyms</h2>
+                <div class="flex gap-2 flex-wrap">${detail.synonyms.length != 0? createElement(detail.synonyms) : 'Not found'}</div>               
               </div>
 
             </div>
     `;
-    document.getElementById("word_modal").showModal();
-      
-    
-
+  
+    document.getElementById("word_modal").showModal();  
     
 }
 
@@ -219,5 +218,5 @@ btnSearch.addEventListener('click', ()=>{
 
        displayWords(filterWord)
     })
-    
+    modalSpinner(false)
 })
