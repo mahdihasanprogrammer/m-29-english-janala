@@ -1,11 +1,24 @@
 
-document.getElementById('faq-btn').addEventListener('click', (e)=>{
+const faqBtns = document.querySelectorAll('.faq-btn');
+
+faqBtns.forEach(faqBtn => {
+    faqBtn.addEventListener('click', (e)=>{
     e.preventDefault()
     const faqSection = document.getElementById('search-faq');
     faqSection.scrollIntoView({behavior:"smooth"})
 })
-document.getElementById('learn-btn').addEventListener('click', (e)=>{
+
+});
+
+
+const learnBtns = document.querySelectorAll('.learn-btn');
+learnBtns.forEach(learnBtn =>{
+
+    learnBtn.addEventListener('click', (e)=>{
     e.preventDefault()
     const lessonSection = document.getElementById('lesson-section');
     lessonSection.scrollIntoView({behavior:"smooth"})
 })
+
+})
+
